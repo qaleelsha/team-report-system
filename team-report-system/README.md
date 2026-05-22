@@ -61,47 +61,27 @@ team-report-storage/
 API Endpoint Reference
 
 Employee Operations
-
 POST /employees - Register a new employee record.
-
 GET /employees - Retrieve all registered employee records.
 
-
 Team Operations
-
 POST /teams - Establish a new operational group.
-
 GET /teams - List all established operational groups.
 
-
 Mapping & Relational Queries
-
 POST /teams/:teamId/employees/:employeeId - Associate an employee to a specific team.
-
 GET /teams/:teamId/employees - Retrieve all employees mapped to a team using a relational internal JOIN query.
-
 GET /employees/:employeeId/teams - Reverse look up teams assigned to a specific employee.
 
-
 Report Metrics & Ingestion
-
 POST /upload-report - Uploads document payloads to the S3 pending/ directory and logs transactional metadata to RDS.
-
 GET /reports - Compiles real-time data analytical summaries showing total files submitted per team using an analytical LEFT JOIN and GROUP BY aggregation query.
-
 GET /teams/:teamId/reports - Fetch metadata logs for reports linked to a specific team ID.
 
-
 Automated Processing Logic
-
 The background worker is hosted on AWS Lambda and acts as a stateless compute engine. Upon invocation by Amazon EventBridge, it executes the following transactional pipeline:
-
 Scan: Queries the PostgreSQL metadata table to capture all records flagged with a pending status.
-
 Fetch: Streams down the source object content from the S3 pending/ prefix folder.
-
 Analyze: Quantifies metrics (such as compiling total structured line inputs) and updates internal cloud logs.
-
 Transfer: Copies the object payload to the target processed/ prefix folder and purges the source file from pending/.
-
 Commit: Commits a relational database update modifying the status flag to processed and logs a final timestamp execution value (processed_at).
