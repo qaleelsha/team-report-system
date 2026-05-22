@@ -85,4 +85,4 @@ Scan: Queries the PostgreSQL metadata table to capture all records flagged with 
 Fetch: Streams down the source object content from the S3 pending/ prefix folder.
 Analyze: Quantifies metrics (such as compiling total structured line inputs) and updates internal cloud logs.
 Transfer: Copies the object payload to the target processed/ prefix folder and purges the source file from pending/.
-Commit: Commits a relational database update modifying the status flag to processed and logs a final timestamp execution value (processed_at).
+Commit: Commits a relational database update modifying the status flag to processed and logs a final timestamp execution value (processed_at). 
